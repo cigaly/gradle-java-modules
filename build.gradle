@@ -3,10 +3,11 @@ plugins {
     id 'idea'
     id 'java-gradle-plugin'
     id 'com.gradle.plugin-publish' version '0.9.7'
+    id 'maven'
 }
 
 group = 'org.gradle.java'
-version = '0.1.1'
+version = '0.1.1.1'
 
 targetCompatibility = '1.7'
 sourceCompatibility = '1.7'

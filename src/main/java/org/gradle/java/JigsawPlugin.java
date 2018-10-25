@@ -29,7 +29,9 @@ import org.gradle.api.tasks.JavaExec;
 import org.gradle.api.tasks.SourceSet;
 import org.gradle.api.tasks.SourceSetContainer;
 import org.gradle.api.tasks.compile.JavaCompile;
+import org.gradle.api.tasks.javadoc.Javadoc;
 import org.gradle.api.tasks.testing.Test;
+import org.gradle.external.javadoc.CoreJavadocOptions;
 import org.gradle.jvm.application.tasks.CreateStartScripts;
 
 import java.io.File;
@@ -65,6 +67,7 @@ public class JigsawPlugin implements Plugin<Project> {
                 configureCompileJavaTask(project);
                 configureCompileTestJavaTask(project);
                 configureTestTask(project);
+                configureJavadocTask(project);
                 project.getPluginManager().withPlugin(APPLICATION_PLUGIN, new Action<AppliedPlugin>() {
                     @Override
                     public void execute(AppliedPlugin appliedPlugin) {
@@ -86,6 +89,17 @@ public class JigsawPlugin implements Plugin<Project> {
                 args.add(compileJava.getClasspath().getAsPath());
                 compileJava.getOptions().setCompilerArgs(args);
                 compileJava.setClasspath(project.files());
+            }
+        });
+    }
+
+    private void configureJavadocTask(final Project project) {
+        final Javadoc javadoc = (Javadoc) project.getTasks().findByName(JavaPlugin.JAVADOC_TASK_NAME);
+        javadoc.doFirst(new Action<Task>() {
+            @Override
+            public void execute(Task task) {
+                ((CoreJavadocOptions)javadoc.getOptions()).addStringOption("-module-path", javadoc.getClasspath().getAsPath());
+                javadoc.setClasspath(project.files());
             }
         });
     }
