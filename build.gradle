@@ -7,10 +7,10 @@ plugins {
 }
 
 group = 'org.gradle.java'
-version = '0.1.1.1'
+version = '0.1.1.2'
 
-targetCompatibility = '1.7'
-sourceCompatibility = '1.7'
+targetCompatibility = '1.8'
+sourceCompatibility = '1.8'
 
 // Fix a bad interaction with IntelliJ and Gradle > 4.0
 idea.module.inheritOutputDirs = true
